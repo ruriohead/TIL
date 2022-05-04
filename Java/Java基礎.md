@@ -84,3 +84,32 @@ class makeSelfIntroduction {
 ※volatileはsynchronizedの簡易版  
 volatileはスレッドとメインメモリ間の変数を同期する。synchronizedは加えて排他制御も行う
 参考[https://qiita.com/Kohei-Sato-1221/items/8d2c08ce0b0f829e0c0a]
+
+### ポリモーフィズム、継承の目的と使いどころ
+- コードの再利用性を高めたいとき：新たなクラスを作成するときに、既存クラスの要素やメソッドを再利用する
+
+### インナークラス
+Javaではクラスをネストできる（可読性やメンテナンス性を高めるために、共通して存在するクラスをグループ化する）  
+インナークラスはアウタークラスの要素やメソッドにアクセスすることができる  
+通常のクラスと異なり、指定できるアクセス修飾子は`private`か`protected`（外部のオブジェクトからインナークラスにアクセスされたくない場合は`private`にする）
+```java
+例
+class OuterClass {
+  int x = 10;
+
+  private class InnerClass {
+    int y = 5;
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    OuterClass myOuter = new OuterClass();
+    // クラスの外側（メインクラス）からインナークラスにアクセス
+    OuterClass.InnerClass myInner = myOuter.new InnerClass();
+    System.out.println(myInner.y + myOuter.x);
+  }
+}
+```
+はエラーになる  
+`static`修飾子を指定すると、アウタークラスを生成せずにインナークラスにアクセスできる  
