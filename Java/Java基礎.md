@@ -44,16 +44,66 @@ class makeSelfIntroduction {
 ```
 
 ### StringとStringBuilder
-- Stringはimmutable(不変）
+- Stringはimmutable（不変）
 → 一度生成した文字列は変更不能
    →　一見文字列を追加・変更しているように見えて、実際はいちいち新たに文字列が生成されている
    →　ループ回数の多いfor文等に用いると、凄まじいメモリ消費量になってパフォーマンスが低下する
-- StringBuilderはmutable(可変）
+- StringBuilderはmutable（可変）
 →　文字列の拡張に対応するバッファを持つ
    →　文字列の追加・変更は一旦バッファで受け取り、その結果を既存変数の参照先に反映する
    →　メモリ消費量が一定になり、パフォーマンス低下を防げる
 
-参考[https://qiita.com/shunsuke227ono/items/e8f34c67dcffa0fa28ad]
+> [https://qiita.com/shunsuke227ono/items/e8f34c67dcffa0fa28ad]
+
+### arrayとArrayList
+```java
+// array
+int[] numbers = new int[5];
+String[] names = new String[5];
+// ArrayList
+ArrayList<Integer> myNumbers = new ArrayList<Integer>();
+myNumbers.add(10);
+myNumbers.add(15);
+myNumbers.add(24);
+myNumbers.set(2, 25);
+myNumbers.remove(0);
+System.out.println(myNumbers); // ->(15, 25)
+```
+- arrayはimmutable（不変）
+→　要素の追加/削除がしたければ、新しいarrayを生成しなければいけない
+- ArrayListはmutable（可変）
+→　追加（add()）、削除（rmeove()）、変更（set()）、取得（get()）が自在に行える
+- ArrayListの要素はオブジェクト（⇒ プリミティブ型は対応するラッバークラスを使ってオブジェクトに変換する必要がある）  
+int: `Integer`, boolean: `Boolean`, char: `Character`, double: `Double`
+
+### ArrayListとLinkedList
+- 同じListインターフェースを実装しているので動作は殆ど一緒
+- データの持ち方が異なる（それに起因して用途も異なる）  
+1. ArrayList
+- 内部にarrayを保持しているため、容量が十分でなかった場合にはより大きなarrayが生成されて古いarrayと置き換えられる（古い方は削除される）
+- 使い所： 配列内の要素に対してランダムなアクセスを必要とし、要素の挿入/削除があまり必要ない場合
+- 例： データベースからデータを読み込み、以降順次参照しつつ計算する場合
+2. LinkedList
+- データをコンテナに格納している
+- LinkedListは1つ目のコンテナへのリンクを保持しており、以降の各コンテナは自身の次のコンテナへのリンクを保持している
+- 使い所： 配列内の要素に対してランダムなアクセスを必要とせず、要素の挿入/削除を頻繁に行う場合
+- 例： プログラム中で発生するデータの入れ物が必要な場合
+
+![image](https://user-images.githubusercontent.com/6058309/167079292-626a4549-c7ce-4148-ab0c-5f7cf4d72183.png)  
+
+このため以下のように処理ごとの実行速度に差がでる。  
+ArrayListはデータの保管とアクセスに、LinkedListはデータの操作に向いていることがわかる  
+
+|Description	|Operation	|ArrayList	|LinkedList | 
+|:---|:---:|:---:|:---:| 
+|Get an element	|get	|Fast	|Slow | 
+|Set an element	|set	|Fast	|Slow | 
+|Add an element (to the end of the list)	|add	|Fast	|Fast | 
+|Insert an element (at an arbitrary position)	|add(i, value)	|Slow	|Fast | 
+|Remove an element	|remove	|Slow	|Fast |
+
+> [https://codegym.cc/quests/lectures/questsyntax.level08.lecture05]
+> [https://qiita.com/BumpeiShimada/items/522798a380dc26c50a50]
 
 ### 修飾子
 1. アクセス修飾子
@@ -71,19 +121,19 @@ class makeSelfIntroduction {
 シリアライズ（直列化）による情報のストリーム化の対象外になる  
 ストリーム化： オブジェクトをファイルとして扱ったり、ネットワーク上でやり取りできるようにするための方法  
 ※ staticなフィールドはそもそもクラスに属するのでオブジェクトのストリーム化の対象外  
-参考[http://sjc-p.obx21.com/word/et/transient.html]  
+> [http://sjc-p.obx21.com/word/et/transient.html]  
 - synchronized:  
 メソッドが同時に一つのスレッドからのみアクセスされる（排他制御）  
 プログラムにてスレッドを分けて処理しているけれど、複数スレッドで同時に処理されては困る箇所を制限  
 ※デッドロックに注意
-参考[https://qiita.com/subaru44k/items/13c52151b8d08fbc0380]
+> [https://qiita.com/subaru44k/items/13c52151b8d08fbc0380]
 - volatile:  
 要素の値がローカルスレッドにキャッシュされず、常にメインメモリから読み込まれる  
 ｰ> パフォーマンス向上目的で各スレッドが変数のコピーを用意すると、メインメモリに変更があった場合に値の乖離が発生する可能性がある  
 コンパイルの無駄な最適化を防ぐ用途もある（最適化の対象外になる）  
 ※volatileはsynchronizedの簡易版  
 volatileはスレッドとメインメモリ間の変数を同期する。synchronizedは加えて排他制御も行う
-参考[https://qiita.com/Kohei-Sato-1221/items/8d2c08ce0b0f829e0c0a]
+> [https://qiita.com/Kohei-Sato-1221/items/8d2c08ce0b0f829e0c0a]
 
 ### ポリモーフィズム、継承の目的と使いどころ
 - コードの再利用性を高めたいとき：新たなクラスを作成するときに、既存クラスの要素やメソッドを再利用する
