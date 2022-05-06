@@ -224,3 +224,13 @@ public class Main {
 ### インターフェースのデフォルトアクセス修飾子
 - メソッドは`public`,`abstract`
 - 要素は`public`,`static`,`final`
+
+### キャストのコンパイルエラーとClassCastException
+- キャスト成功の可能性が全くない場合はコンパイルエラー（Generics等で方を明示することでコンパイルエラーを検知しやすくなる）
+- キャスト成功の可能性はあって、実行したらエラーになったものがClassCastException
+  ```java
+  // コンパイル時点ではObject -> Stringの変換は正しいものとされる
+  // 但し実行すると、iはInteger型であり、String型にキャストできない
+  Object i = Integer.valueOf(42); 
+  String s = (String)i; // ClassCastException thrown here.
+  ```
