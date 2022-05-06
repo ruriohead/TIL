@@ -234,3 +234,4 @@ public class Main {
   Object i = Integer.valueOf(42); 
   String s = (String)i; // ClassCastException thrown here.
   ```
+> https://stackoverflow.com/questions/907360/explanation-of-classcastexception-in-java
