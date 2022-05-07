@@ -235,3 +235,33 @@ public class Main {
   String s = (String)i; // ClassCastException thrown here.
   ```
 > https://stackoverflow.com/questions/907360/explanation-of-classcastexception-in-java
+
+### 匿名クラスとラムダ式で扱える変数について
+- クラス変数やstatic変数は扱える（参照、値の変更）
+- finalでないローカル変数や引数は扱えない（参照は可能、値の変更不可）  
+  ```java
+  public class SampleClass {
+      private int classField = 0;
+      private static int staticField = 0;
+      private void process() {
+          DoSomethingInterface functionalInterface = () -> {
+              classField ++;  // ← この変数を扱うことは可能。
+              staticField ++;  // ← この変数を扱うことは可能。
+          };
+          System.out.println("Before; classField =" + classField);
+          System.out.println("Before; staticField =" + staticField);
+          functionalInterface.doSomething(); // 処理を実行
+          System.out.println("After; classField =" + classField);
+          System.out.println("After; staticField =" + staticField);
+      }
+      @FunctionalInterface
+      public interface DoSomethingInterface {
+          void doSomething();
+      }
+      public static void main(String[] args) {
+          SampleClass sample = new SampleClass();
+          sample.process();
+      }
+  }
+  ```
+  
