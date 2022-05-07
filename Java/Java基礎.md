@@ -264,4 +264,31 @@ public class Main {
       }
   }
   ```
+  ```java
+  private void process() {
+      final int i = 0;
+      int j = 0;
+      DoSomethingInterface finctionInterface = () -> {
+          i++; // <- OK
+          System.out.println("j=" + j); // 参照しているだけなのでOK
+          j++; // <- この変数は扱えないのでエラー
+      }
+  }
+  ```
+- ローカル変数や引数が何らかのクラスだった場合、そのクラスが持つクラス変数の値を変更可能
+- クラス自体を変更することは不可能（参照は可能）  
+  ```java
+  public class DummyClass {
+      public int field;
+  }
+  
+  private void process(DummyClass argClass) {
+      DummyClass localFiledClass = new DummyClass();
+      DoSomethingInterface functionalInterface = () -> {
+      //        localFiledClass = new DummyClass(); // ← 不可
+      //        argClass = new DummyClass(); // ← 不可
+          localFiledClass.field++; // ← 可能
+          argClass.field++; // ← 可能
+  ……
+  ```
   
