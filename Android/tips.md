@@ -34,3 +34,29 @@ String textView = findViewById(R.id.text).getText();
 ### Viewのセンタライズ
 - LinearLayoutなら`android:gravity="center"`に設定
 - RelativeLayoutなら`android:layout_centerVertical="true"`に設定
+
+### ボタン（やビューの等間隔配置）
+`layout_width="match_parent"`(or `layout_width="0dp"`)と`layout_weight="1"`を設定  
+`layout_weight`は並んでいるオブジェクト間の表示比率（→1:1:1とすれば等間隔）
+```java
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Btn1"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Btn2"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+             android:text="Btn3"/>
+        </LinearLayout>
+```
