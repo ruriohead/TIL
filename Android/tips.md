@@ -37,7 +37,7 @@ String textView = findViewById(R.id.text).getText();
 
 ### ボタン（やビューの等間隔配置）
 `layout_width="match_parent"`(or `layout_width="0dp"`)と`layout_weight="1"`を設定  
-`layout_weight`は並んでいるオブジェクト間の表示比率（→1:1:1とすれば等間隔）
+`layout_weight`は並んでいるオブジェクトの総和に対する表示比率（→1:1:1とすれば、総和3に対して等間隔）
 ```java
         <LinearLayout
             android:orientation="horizontal"
