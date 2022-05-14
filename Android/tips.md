@@ -30,3 +30,7 @@ String textView = findViewById(R.id.text).getText();
 > findViewById()の対象は __onCreate(Bundle)で処理された__ android:idアトリビュート
 > 
 だからサンプルアプリでは、いつも初手`onCreate()`内で`findViewById()`って書き方になってたのね
+
+### Viewのセンタライズ
+- LinearLayoutなら`android:gravity="center"`に設定
+- RelativeLayoutなら`android:layout_centerVertical="true"`に設定
