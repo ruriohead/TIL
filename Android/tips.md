@@ -68,3 +68,56 @@ String textView = findViewById(R.id.text).getText();
     android:autoSizeMinTextSize="最小文字サイズ"
     android:autoSizeMaxTextSize="最大文字サイズ"
 ```
+
+### 角丸のViewの作り方
+1. drawableにcornerで`android:radius`アトリビュートを持つレイアウトを作成  
+`android:radius`は四角全て。それぞれの角は`android:bottomRight/LeftRadius`, `android:topRight/LeftRadius`で個別設定も可能
+```xml
+例
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:radius="20dp"/>
+            <solid
+                android:color="@color/purple_500"/>
+        </shape>
+    </item>
+</selector>
+```
+2. Viewの`android:background`アトリビュートで`@drawable/作成したレイアウト名`で指定する
+※ Dialogに角丸を適用するには上記に加えて、Dialogの呼び出し元のView（Dialogを仮置きしている領域？）を透過にする必要がある  
+　「Dialog自体を角丸に設定しても、呼び出し元では領域が矩形のまま→重ねてみたら矩形で表示される」という理屈らしい  
+　・・・なんかsetBackgroundDrawable()は非推奨っぽい？（要確認）
+```java
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        // カスタムレイアウトの生成
+        if (getActivity() != null) {
+            popupView = getActivity().getLayoutInflater().inflate(R.layout.popup_menu, null);
+        }
+
+        Button closePopUpButton = popupView.findViewById(R.id.dialog_inner_close_button);
+        closePopUpButton.setOnClickListener(v -> {
+            Log.d("dialog button touched", "close dialog");
+            getDialog().dismiss();
+        });
+
+        // ViewをpopUpDialog.Builderに追加
+        builder.setView(popupView);
+
+        // Dialog生成
+        popUpDialog = builder.create();
+        // Set the background of the dialog's root view to transparent,
+        // because Android puts your dialog layout within a root view that hides the corners in your custom layout.
+        popUpDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popUpDialog.show();
+
+        return popUpDialog;
+    }
+```
+
