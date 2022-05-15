@@ -60,3 +60,11 @@ String textView = findViewById(R.id.text).getText();
              android:text="Btn3"/>
         </LinearLayout>
 ```
+
+### テキストサイズを画面サイズ依存で自動調整する
+以下を使う（※APIレベル26以上でのみ使用可能（最小APIレベルがそれを下回るとワーニング出る））
+```java
+    android:autoSizeTextType="uniform"
+    android:autoSizeMinTextSize="最小文字サイズ"
+    android:autoSizeMaxTextSize="最大文字サイズ"
+```
