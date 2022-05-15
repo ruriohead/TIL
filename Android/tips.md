@@ -90,6 +90,7 @@ String textView = findViewById(R.id.text).getText();
 ※ Dialogに角丸を適用するには上記に加えて、Dialogの呼び出し元のView（Dialogを仮置きしている領域？）を透過にする必要がある  
 　「Dialog自体を角丸に設定しても、呼び出し元では領域が矩形のまま→重ねてみたら矩形で表示される」という理屈らしい  
 　・・・なんかsetBackgroundDrawable()は非推奨っぽい？（要確認）
+> [How to make custom dialog with rounded corners in android](https://stackoverflow.com/questions/28937106/how-to-make-custom-dialog-with-rounded-corners-in-android)
 ```java
     @NonNull
     @Override
