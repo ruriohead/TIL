@@ -1,7 +1,18 @@
 # 開発していて気づいたことたち
+
+## Android Studio関連
 ### メソッド名にカーソル合わせてF4キーを押すと、その関数の定義箇所に飛べる
 真っ先にAndroid Developersでリファレンス探すのもいいけど、オフラインでさっと情報を確認するならこっちのほうが速い
 
+### メモリリークについて
+- Android10以降は以前に比べてメモリリークしにくくなっている様子
+  > [ART ガベージ コレクションのデバッグ](https://source.android.google.cn/devices/tech/dalvik/gc-debug?hl=ja)
+- 開発中のアプリがメモリリークしていないかを調べるツールは沢山あるので導入すると良い
+  1. [Memory Profiler を使用してアプリのメモリ使用量を調べる](https://developer.android.com/studio/profile/memory-profiler?hl=ja)
+  2. [LeakCanary](https://square.github.io/leakcanary/)
+
+
+## メソッド関連
 ### findViewById()とその後の操作は分けなきゃいけないっぽい
 ViewでgetText()メソッドが解決できないとある   
 
@@ -33,6 +44,8 @@ String textView = findViewById(R.id.text).getText();
 > 
 だからサンプルアプリでは、いつも初手`onCreate()`内で`findViewById()`って書き方になってたのね
 
+
+## レイアウト関連
 ### Viewのセンタライズ
 - LinearLayoutなら`android:gravity="center"`に設定
 - RelativeLayoutなら`android:layout_centerVertical="true"`に設定
