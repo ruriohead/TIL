@@ -137,3 +137,10 @@ String textView = findViewById(R.id.text).getText();
     }
 ```
 
+## その他
+### MVP
+- Model （Presenterの要求に応じてデータを操作して結果を伝える）
+- View （画面UI　ユーザーが直接目にして触れる部分）
+- Presenter　（Viewへの変更（ボタン押下、値入力）に応じた処理を実行したり、Modelに投げたりする仲介役）
+
+  [User] <-> [View] <-> [Presenter] <-> [Model]
