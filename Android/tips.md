@@ -11,6 +11,10 @@
   1. [Memory Profiler を使用してアプリのメモリ使用量を調べる](https://developer.android.com/studio/profile/memory-profiler?hl=ja)
   2. [LeakCanary](https://square.github.io/leakcanary/)
 
+### API32時点でエミュレータのモバイル回線を設定でOFFにすることはできないらしい（バグ）
+- 迂回策として機内モードを使用するとよい
+- 2010年時点でバグレポート出てるのに...
+  > [How to simulate total network loss in Android Emulator](https://stackoverflow.com/questions/4154815/how-to-simulate-total-network-loss-in-android-emulator?rq=1)
 
 ## メソッド関連
 ### findViewById()とその後の操作は分けなきゃいけないっぽい
@@ -137,10 +141,3 @@ String textView = findViewById(R.id.text).getText();
     }
 ```
 
-## その他
-### MVP
-- Model （Presenterの要求に応じてデータを操作して結果を伝える）
-- View （画面UI　ユーザーが直接目にして触れる部分）
-- Presenter　（Viewへの変更（ボタン押下、値入力）に応じた処理を実行したり、Modelに投げたりする仲介役）
-
-  [User] <-> [View] <-> [Presenter] <-> [Model]
