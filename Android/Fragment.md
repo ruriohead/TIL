@@ -1,5 +1,6 @@
 ## Fragment
 > [フラグメント](https://developer.android.com/guide/components/fragments?hl=ja)
+> [今さら聞けない Activity と Fragment の使い分け](https://qiita.com/KeithYokoma/items/c41b22bda8c8d924d8cd)
 ### フラグメントとは
 - UI部品の一種
   - 1つのアクティビティに複数のフラグメントを組み合わせたマルチペインUI
@@ -62,7 +63,9 @@
       - フラグメントが一時停止、停止して、再開されたときに保持する必須コンポーネントの初期化を実装する
     - `onCreateView()`  
       - フラグメントが初めてUIを描画するタイミングでシステムが呼び出す  
-      - このメソッドから`View`を返す必要がある（nullを返せばUIを提示しないフラグメントも実装可能）
+      - このメソッドから`View`を返す必要がある
+        - nullを返せばUIを提示しないフラグメントも実装可能
+          - Activityのためのデータを、ライフサイクルに合わせて管理するホルダーのような役割を持たせられる
         - レイアウトリソース（xml）からインフレートできる  
         （※ ListFragmentのサブクラスに対しては、デフォルトでListViewがonCreateView()から返されるため、実装不要）
         ```java
