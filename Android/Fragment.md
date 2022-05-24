@@ -1,5 +1,5 @@
 ## Fragment
-> [フラグメント](https://developer.android.com/guide/components/fragments?hl=ja)
+> [フラグメント](https://developer.android.com/guide/components/fragments?hl=ja)  
 > [今さら聞けない Activity と Fragment の使い分け](https://qiita.com/KeithYokoma/items/c41b22bda8c8d924d8cd)
 ### フラグメントとは
 - UI部品の一種
