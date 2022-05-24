@@ -50,6 +50,20 @@ String textView = findViewById(R.id.text).getText();
 
 
 ## レイアウト関連
+### タイトルバー無効化
+1. アプリ全体
+`res/values/themes`の3行目  
+`<style name="Theme.StudyApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">`を  
+`<style name="Theme.StudyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">`に変更
+
+2. アクティビティ毎に設定
+`onCreate`に以下を追加  
+```java
+ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+        actionBar.hide();
+    }
+```
 ### Viewのセンタライズ
 - LinearLayoutなら`android:gravity="center"`に設定
 - RelativeLayoutなら`android:layout_centerVertical="true"`に設定
