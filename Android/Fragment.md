@@ -92,3 +92,51 @@
 - `PreferenceFragmentCompat`
   - `Preference`オブジェクトの階層をリストとして表示（アプリの設定画面作成に用いる）
 
+### アクティビティと通信する
+- `Fragment`は`FragmentActivity`から独立したオブジェクトとして実装されている（使い回せる）が、フラグメントのインスタンスはホストされているアクティビティに直接結びついている
+- フラグメント側からは`getActivity()`を使用して`FragmentActivity`インスタンスにアクセスでき、アクティビティのレイアウトでビューを見つけたりできる
+```java
+View listView = getActivity().findViewById(R.id.list);
+```
+
+- アクティビティ側からは`findFragmentById()`や`findFragmentByTag()`を使って`FragmentManager`から`Fragment`への参照を取得できる（これによりフラグメント内のメソッドを呼び出すこともできる）
+```java
+ExampleFragment fragment = (ExampleFragment) getSupportFragmentManager().findFragmentById(R.id.example_fragment);
+```
+
+- アクティビティへのイベントコールバックを作成する
+  -  [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel?hl=ja)では処理できないイベントをアクティビティやアクティビティがホストする他のフラグメントに伝える必要がある場合、フラグメント内にコールバックインターフェースを定義できる（＝ホストでの実装を強制）
+  > [FragmentからActivityにコールバックする方法2017](https://qiita.com/Nkzn/items/fca698f31d3c9c335a80)
+  ```java
+  public static class FragmentA extends ListFragment {
+    OnArticleSelectedListener listener;
+    ...
+    // Container Activity must implement this interface
+    // ex. public class MainActivity extends Activity implements FragmentA.OnArticleSelectedListener {}
+    public interface OnArticleSelectedListener {
+        public void onArticleSelected(Uri articleUri);
+    }
+    ...
+
+    // ホストアクティビティがOnArticleSelectedListenerを実装していないと例外発生
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (OnArticleSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
+        }
+    }
+    ...
+    
+    // フラグメントのメソッドからホストアクティビティに情報を伝える
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        // Append the clicked item's row ID with the content provider Uri
+        Uri noteUri = ContentUris.withAppendedId(ArticleColumns.CONTENT_URI, id);
+        // Send the event and Uri to the host activity
+        listener.onArticleSelected(noteUri);
+    }
+  }
+  ```
