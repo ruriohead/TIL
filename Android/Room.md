@@ -1,7 +1,7 @@
 # Room
 > [Room を使用してローカル データベースにデータを保存する](https://developer.android.com/training/data-storage/room?hl=ja)
 ## Roomとは
-- SQLite全体に抽象化レイヤを提供する永続ライブラリ
+- SQLite全体に抽象化レイヤを提供する永続ライブラリ（永続＝ライフサイクルに無関係）
 - Google推奨なので、特に理由がなければSQLiteを直接使用するのは避ける
 
 ## セットアップ
