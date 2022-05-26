@@ -155,3 +155,10 @@ ActionBar actionBar = getSupportActionBar();
     }
 ```
 
+### Fragment上にSnackBarを表示する
+```java
+Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+           "Look at me, I'm a fancy snackbar", Snackbar.LENGTH_LONG);
+snackBar.show();
+```
+
