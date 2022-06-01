@@ -3,6 +3,8 @@
 ## Roomとは
 - SQLite全体に抽象化レイヤを提供する永続ライブラリ（永続＝ライフサイクルに無関係）
 - Google推奨なので、特に理由がなければSQLiteを直接使用するのは避ける
+  - Javaのドキュメントがあまり充実していないのが玉に瑕（コード例がKotlinしかないページが多い）
+![image](https://user-images.githubusercontent.com/6058309/171435684-f4e7d4d0-a9ce-4d25-8d57-a1b1b8a6b76f.png)
 
 ## セットアップ
 - `build.gradle`の`dependencies`に以下を追記
