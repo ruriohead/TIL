@@ -4,7 +4,6 @@
 - SQLite全体に抽象化レイヤを提供する永続ライブラリ（永続＝ライフサイクルに無関係）
 - Google推奨なので、特に理由がなければSQLiteを直接使用するのは避ける
   - Javaのドキュメントがあまり充実していないのが玉に瑕（コード例がKotlinしかないページが多い）
-![image](https://user-images.githubusercontent.com/6058309/171435684-f4e7d4d0-a9ce-4d25-8d57-a1b1b8a6b76f.png)
 
 ## セットアップ
 - `build.gradle`の`dependencies`に以下を追記
@@ -100,3 +99,10 @@ AppDatabase db = Room.databaseBuilder(getApplicationContext(),
 UserDao userDao = db.userDao();
 List<User> users = userDao.getAll();
 ```
+## 実際の開発プロセス(RoomDatabaseを使ったMVVM開発）
+- Room Databaseを使ってMVVMアーキテクチャで開発をするために、下図のようなコンポーネントに分けて実装を進める
+> [【Android】分かった気になれる！アーキテクチャ・MVVM概説](https://qiita.com/iTakahiro/items/6b1b22efa69e55cea3fa)  
+> [【Android】はじめてのRoom](https://qiita.com/iTakahiro/items/7e0d63140ae4dac10d18#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB)  
+
+![image](https://user-images.githubusercontent.com/6058309/171435684-f4e7d4d0-a9ce-4d25-8d57-a1b1b8a6b76f.png)
+
