@@ -42,6 +42,7 @@ String textView = findViewById(R.id.text).getText();
 ```
 
 ### findViewById()の使用条件
+
 [View.findViewById()のリファレンス](https://developer.android.com/reference/android/app/Activity#findViewById(int))を読んでてもう一つ気づいた
 > Finds a view that was identified by the android:id XML attribute __that was processed in onCreate(Bundle)__.  
 > findViewById()の対象は __onCreate(Bundle)で処理された__ android:idアトリビュート
@@ -63,6 +64,17 @@ String textView = findViewById(R.id.text).getText();
 - LiveDataは通常`onCreate()`で監視を開始するのが適当
   - Activity/Fragmentの`onResume()`メソッドからの冗長な呼び出しをシステムが行わないようにできる
 - Roomと併用するとバックグラウンドでのDBの非同期更新が完了次第、UIを更新できる
+
+### LayoutInflater.inflateのattachToRoot
+> [LayoutInflater.inflateのattachToRootとは何か？](https://qiita.com/nemo-855/items/e8521fed9392be72b3d9)  
+- `inflate(resource: Int, root: ViewGroup?, attachToRoot: Boolean): View`の第一引数はViewに変換したいlayoutのxml, 第二引数は生成するViewをセットする親ViewGroup, 第三引数は第二引数のViewGroupへのViewのセットを自動でするか手動でするか　　
+
+  > 僕がこのLayoutInflaterを記述していたのは大抵FragmentのonCreateViewやRecyclerViewのAdapterのonCreateViewHolder等でした。
+  > これらのようなタイミングではLayoutInflater.inflateでViewを作成するタイミングでさらにそれを親のViewGroupにセットする必要がありません。
+  > なぜならFragmentを作成するときはfragmentManager、RecyclerViewの場合はAdapterが代わりにその役割を果たしてくれているからです。
+  > なのでonCreateViewやonCreateViewHolderの内部でLayoutInflater.inflateをする時にattachToRootをtrueにしてしまうと、
+  > 親ViewGroupに同じViewを二つセットすることになってしまいIllegalStateExceptionが起きてしまいます。
+  > なのでfalseをセットしないといけないらしいです。
 
 ## レイアウト関連
 ### タイトルバー無効化
