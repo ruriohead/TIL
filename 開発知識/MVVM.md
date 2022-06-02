@@ -36,10 +36,13 @@
   - データをどこ（どのModel）から取得するか
   - どういう条件で取得するか
 - データ取得・保存がしやすいようなAPIを提供
-
-ViewModelに含める場合もあるが、分けて設置することでViewModelの負担を減らせる  
-Modelからのデータ取得をRepositoryに委任すると、Repositoryがデータの取得先を変更してもViewModelを変更する必要がなくなる  
-  - ViewModelはRepositoryにデータ取得/更新/保存を要求する方法しかしらないため
+- DAOパターンより高い抽象度で、エンティティの操作から現実の永続化ストレージを完全に隠蔽する
+  - データベースに直接アクセスするインスタンスを作らせない
+  - Repositoryのユーザ（ViewModel）は永続化ストレージが何であるか（MySQL? Redis?）を意識せずに保存や検索ができる
+  - Modelからのデータ取得をRepositoryに委任すると、Repositoryがデータの取得先を変更してもViewModelを変更する必要がなくなる  
+    - ViewModelはRepositoryにデータ取得/更新/保存を要求する方法しかしらないため
+- ViewModelに含める場合もあるが、分けて設置することでViewModelの負担を減らせる  
+  
 
 ### Model
 - データを実体として保存している（永続化）
