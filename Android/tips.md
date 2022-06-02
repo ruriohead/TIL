@@ -162,3 +162,6 @@ Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.conten
 snackBar.show();
 ```
 
+### ボタンを連打されてもonClickListenerが一度しか走らないようにする
+> [Android OnClickListener Prevent multiple clicks](https://gist.github.com/hilfritz/5a8ca9e172918bc224f03c3dac9c39f3)
+- View.OnClickListenerを実装した抽象クラスで、一定期間の再クリック防止機能を持たせる
