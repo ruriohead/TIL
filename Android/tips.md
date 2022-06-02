@@ -48,6 +48,21 @@ String textView = findViewById(R.id.text).getText();
 > 
 だからサンプルアプリでは、いつも初手`onCreate()`内で`findViewById()`って書き方になってたのね
 
+### ボタンを連打されてもonClickListenerが一度しか走らないようにする
+> [Android OnClickListener Prevent multiple clicks](https://gist.github.com/hilfritz/5a8ca9e172918bc224f03c3dac9c39f3)
+- View.OnClickListenerを実装した抽象クラスで、一定期間の再クリック防止機能を持たせる
+
+### LiveDataはライフサイクルに応じた監視が可能なデータホルダークラス
+> [LiveData の概要](https://developer.android.com/topic/libraries/architecture/livedata.html?hl=ja)
+- Activity/Fragment/Serviceのライフサイクルを考慮して監視される
+  - アクティブなアプリコンポーネントでの監視のみ更新する
+    - 停止されたアクティビティに起因するクラッシュが発生しない
+  - 関連付けられたライフサイクルが破棄されたときに自身をクリーンアップするのでメモリリークしない
+  - 非アクティブ化後に再度アクティブになったときに、最新のデータを受け取る（例外的な動作）
+  - Actiity/Fragmentの再作成（デバイスの回転など）後に最新のデータをすぐに受け取る
+- LiveDataは通常`onCreate()`で監視を開始するのが適当
+  - Activity/Fragmentの`onResume()`メソッドからの冗長な呼び出しをシステムが行わないようにできる
+- Roomと併用するとバックグラウンドでのDBの非同期更新が完了次第、UIを更新できる
 
 ## レイアウト関連
 ### タイトルバー無効化
@@ -161,7 +176,3 @@ Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.conten
            "Look at me, I'm a fancy snackbar", Snackbar.LENGTH_LONG);
 snackBar.show();
 ```
-
-### ボタンを連打されてもonClickListenerが一度しか走らないようにする
-> [Android OnClickListener Prevent multiple clicks](https://gist.github.com/hilfritz/5a8ca9e172918bc224f03c3dac9c39f3)
-- View.OnClickListenerを実装した抽象クラスで、一定期間の再クリック防止機能を持たせる
