@@ -42,7 +42,7 @@ dependencies {
   }
   ```
 - Data Access Object (DAO)  
-> [Room DAO を使用してデータにアクセスする](https://developer.android.com/training/data-storage/room/accessing-data?hl=ja) 
+  > [Room DAO を使用してデータにアクセスする](https://developer.android.com/training/data-storage/room/accessing-data?hl=ja) 
   - アプリがDBのデータのクエリ/更新/挿入/削除に使用できるメソッドを提供するオブジェクト
   - @Daoアノテーションをつけたインターフェースか抽象クラスで定義する
   - コンビニエンスメソッドはSQL文の記述なしにシンプルな挿入/更新/削除操作を定義する
@@ -72,7 +72,7 @@ dependencies {
   }
   ```
 - Data Entities  
-> [Room エンティティを使用してデータを定義する](https://developer.android.com/training/data-storage/room/defining-data?hl=ja)
+  > [Room エンティティを使用してデータを定義する](https://developer.android.com/training/data-storage/room/defining-data?hl=ja)
   - DBに保存するオブジェクトを表すエンティティの定義（＝データベーススキーマ）
   - 以下のように主キーや列情報を含むクラスを定義する
   ```java
@@ -101,7 +101,7 @@ List<User> users = userDao.getAll();
 ```
 ## 実際の開発プロセス(RoomDatabaseを使ったMVVM開発）
 - Room Databaseを使ってMVVMアーキテクチャで開発をするために、下図のようなコンポーネントに分けて実装を進める
-> [レッスン 10: Room を使用してデータを保存する](https://developer.android.com/codelabs/android-training-livedata-viewmodel?index=..%2F..%2Fandroid-training&hl=ja#5) 
+> [レッスン 10: Room を使用してデータを保存する](https://developer.android.com/codelabs/android-training-livedata-viewmodel?index=..%2F..%2Fandroid-training&hl=ja#5)  
 > [Room使ってデータレイヤーを実装してみた](https://torikatsu923.hatenablog.com/entry/2019/11/13/144055)   
 
 ![image](https://user-images.githubusercontent.com/6058309/171435684-f4e7d4d0-a9ce-4d25-8d57-a1b1b8a6b76f.png)
