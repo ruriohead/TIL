@@ -76,6 +76,8 @@ String textView = findViewById(R.id.text).getText();
   > 親ViewGroupに同じViewを二つセットすることになってしまいIllegalStateExceptionが起きてしまいます。
   > なのでfalseをセットしないといけないらしいです。
 
+### 
+
 ## レイアウト関連
 ### タイトルバー無効化
 1. アプリ全体
