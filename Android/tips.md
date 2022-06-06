@@ -190,3 +190,11 @@ Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.conten
            "Look at me, I'm a fancy snackbar", Snackbar.LENGTH_LONG);
 snackBar.show();
 ```
+
+### material buttonをボタンに表示する
+[drawable start not working with material button](https://stackoverflow.com/questions/61353353/drawable-start-not-working-with-material-button)  
+[Buttons](https://material.io/components/buttons/android#text-button)
+- ボタンにテキスト付きでアイコンを表示したい
+  - 通常の画像を使用する場合、`android:drawableStart`,`android:drawableEnd`,`android:drawableTop`,`android:drawableBottom`等を使う
+  - material buttonを使用する場合は上記が使えないので、代わりに`app:icon="@drawable/filename"`を使う
+    - `app:iconGravity`や`app:iconTint`で位置や色も自在
