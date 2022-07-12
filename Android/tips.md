@@ -198,3 +198,11 @@ snackBar.show();
   - 通常の画像を使用する場合、`android:drawableStart`,`android:drawableEnd`,`android:drawableTop`,`android:drawableBottom`等を使う
   - material buttonを使用する場合は上記が使えないので、代わりに`app:icon="@drawable/filename"`を使う
     - `app:iconGravity`や`app:iconTint`で位置や色も自在
+
+### logcatのファイル出力
+```java
+Process process = Runtime.getRuntime().exec(new String[] {"logcat", "-d", "-f", <file>});
+```
+-dでログを画面にダンプ  
+-fでダンプ先をコンソールからファイルに変更  
+process.waitfor()で大きいサイズのログがキチンと吐き出されることを担保したり、process.destroy()で処理完了後のプロセスを停止したりするとよい
