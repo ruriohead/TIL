@@ -206,3 +206,7 @@ Process process = Runtime.getRuntime().exec(new String[] {"logcat", "-d", "-f", 
 -dでログを画面にダンプ  
 -fでダンプ先をコンソールからファイルに変更  
 process.waitfor()で大きいサイズのログがキチンと吐き出されることを担保したり、process.destroy()で処理完了後のプロセスを停止したりするとよい
+
+### メインスレッド以外からUIを変更するにはHandlerを使うとよい
+[メインスレッド以外でUIを変更する方法 - Accele Biz IT開発技術 調査報告書 (hatenablog.com)](https://accelebiz.hatenablog.com/entry/2016/09/01/061934)  
+[Androidプログラミングの館](https://dixq.net/Android/05_02.html)  
