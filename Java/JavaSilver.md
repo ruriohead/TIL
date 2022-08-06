@@ -22,6 +22,7 @@
   - 実行中の動的型付けではない
 
 ## StringBuilder()の仕様
+[StringBuilder](https://docs.oracle.com/javase/jp/8/docs/api/java/lang/StringBuilder.html)
 - StringBuilder()はデフォルトで16文字分のバッファを持つ（＋16文字くらいの変更がある前提でオブジェクトを生成する）
 - 文字列を引数に渡すコンストラクタでインスタンス化すると、「渡した文字列の長さ＋16文字」がバッファの大きさになる
 - バッファ容量を超える文字列長になると（バッファがオーバーフローすると）自動的にバッファ容量が更新される
