@@ -1,7 +1,9 @@
 # MVVM (Model-View-ViewModel)
 ## MVVMとは
-- グーグル推奨のアーキテクチャパターン
+[AndroidでMVVM](https://tech.nri-net.com/entry/mvvm_in_android)
+- グーグル推奨のアーキテクチャパターン  
 ![image](https://user-images.githubusercontent.com/6058309/171560570-4d562bab-ab5c-42f3-a46d-171fa08e27ec.png)
+
 
 - 開発者視点
   - コンポーネントの役割を明確化
