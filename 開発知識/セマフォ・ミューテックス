@@ -1,7 +1,0 @@
-### セマフォ
-- 排他制御のための仕組み
-  - 共有資源（メモリなど）に対するアクセス可能な数を示す値
-  
-### ミューテックス
-[PTHREAD_MUTEX](https://linuxjm.osdn.jp/html/glibc-linuxthreads/man3/pthread_mutex_lock.3.html)
-- 値として0か1しかとらないセマフォのようなもの
