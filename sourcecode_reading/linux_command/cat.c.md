@@ -162,7 +162,7 @@
         infile = argv[argind];
 ```
 
-### 標準入力かファイル入力か
+### 標準入力かファイル入力かの判断
 - infileは初期値がハイフンなので、↑で更新されなかった場合か*argv[argind]がハイフンだった場合*は標準入力を読み込む
   - 後者は`echo Clang | Hello - World`−＞`Hello Clang World`のように使える
   - catの本義であるところの「ファイル結合」
@@ -186,5 +186,53 @@
               ok = false;
               continue;
             }
+        }
+```
+
+### input descriptorのファイル情報を取得
+- 取得できなければ、エラー
+  - ok = falseて。。。どーなん
+- fdadvise()はファイルへの特定のアクセス方式を宣言する
+  - カーネルに適切な最適化を実行するためのアドバイス
+  - SEQUENTIALならデータがシーケンシャルに（大きなオフセットの前に小さなオフセットのデータを読むように）アクセスされることを期待する
+    - 「ある地点が読まれたら、次はその隣が読まれるかな」という予測が立つ場合に使う
+    - ディスクIOでの高速化を狙ったものか。今どきのSSDはランダムアクセス性能が上がっているのであまり恩恵はないのかも。
+  - その他のadvice
+    - NORMAL（特に指定なし）
+    - RANDOM（ランダムアクセス）
+    - NOREUSE(データは１度しかアクセスされない）
+    - WILLNEED(指定されたデータは近い将来アクセスされる）
+    - DONTNEED(指定されたデータは近い将来アクセスされない）
+  - [POSIX_FADVISE](https://linuxjm.osdn.jp/html/LDP_man-pages/man2/posix_fadvise.2.html)
+```C
+      if (fstat (input_desc, &stat_buf) < 0)
+        {
+          error (0, errno, "%s", quotef (infile));
+          ok = false;
+          goto contin;
+        }
+
+      /* Optimal size of i/o operations of input.  */
+      idx_t insize = io_blksize (&stat_buf);
+
+      fdadvise (input_desc, 0, 0, FADVISE_SEQUENTIAL);
+```
+
+### 入力ファイルと出力ファイルが同じ通常ファイルを指す場合は無駄なのでさっさとエラー扱いする
+- 通常ファイルで、デバイスファイルが一致して、inodeが一致して
+- lseek()はファイルの読み書きオフセットの位置を変える
+  - 本文ではinput_descのオフセットを現在位置に変更して、ファイル先頭からのファイル位置をバイト数で返す
+```C
+      /* Don't copy a nonempty regular file to itself, as that would
+         merely exhaust the output device.  It's better to catch this
+         error earlier rather than later.  */
+
+      if (out_isreg
+          && stat_buf.st_dev == out_dev && stat_buf.st_ino == out_ino
+          && lseek (input_desc, 0, SEEK_CUR) < stat_buf.st_size)
+        {
+          error (0, 0, _("%s: input file is output file"), quotef (infile));
+          ok = false;
+          goto contin;
         }
 ```
