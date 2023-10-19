@@ -236,3 +236,78 @@
           goto contin;
         }
 ```
+
+### どのバージョンのcatを使うか
+- 整形が必要なオプションを指定されている場合はcat
+- 整形不要で入力・出力共に通常ファイルの場合はcopy_cat
+  - 単にコピーするだけなので入力バッファは空
+- その他の場合はsimple_cat
+- xalignalloc(): バッファ容量の確保（mallocみたいなもん？最後に呼んでるalignfreeがfree()相当か）
+- 
+```C
+      /* Pointer to the input buffer.  */
+      char *inbuf;
+
+      /* Select which version of 'cat' to use.  If any format-oriented
+         options were given use 'cat'; if not, use 'copy_cat' if it
+         works, 'simple_cat' otherwise.  */
+
+      if (! (number || show_ends || show_nonprinting
+             || show_tabs || squeeze_blank))
+        {
+          int copy_cat_status =
+            out_isreg && S_ISREG (stat_buf.st_mode) ? copy_cat () : 0;
+          if (copy_cat_status != 0)
+            {
+              inbuf = nullptr;
+              ok &= 0 < copy_cat_status;
+            }
+          else
+            {
+              insize = MAX (insize, outsize);
+              inbuf = xalignalloc (page_size, insize);
+              ok &= simple_cat (inbuf, insize);
+            }
+        }
+      else
+        {
+          /* Allocate, with an extra byte for a newline sentinel.  */
+          inbuf = xalignalloc (page_size, insize + 1);
+
+          /* Why are
+             (OUTSIZE - 1 + INSIZE * 4 + LINE_COUNTER_BUF_LEN)
+             bytes allocated for the output buffer?
+
+             A test whether output needs to be written is done when the input
+             buffer empties or when a newline appears in the input.  After
+             output is written, at most (OUTSIZE - 1) bytes will remain in the
+             buffer.  Now INSIZE bytes of input is read.  Each input character
+             may grow by a factor of 4 (by the prepending of M-^).  If all
+             characters do, and no newlines appear in this block of input, we
+             will have at most (OUTSIZE - 1 + INSIZE * 4) bytes in the buffer.
+             If the last character in the preceding block of input was a
+             newline, a line number may be written (according to the given
+             options) as the first thing in the output buffer. (Done after the
+             new input is read, but before processing of the input begins.)
+             A line number requires seldom more than LINE_COUNTER_BUF_LEN
+             positions.
+
+             Align the output buffer to a page size boundary, for efficiency
+             on some paging implementations.  */
+
+          idx_t bufsize;
+          if (ckd_mul (&bufsize, insize, 4)
+              || ckd_add (&bufsize, bufsize, outsize)
+              || ckd_add (&bufsize, bufsize, LINE_COUNTER_BUF_LEN - 1))
+            xalloc_die ();
+          char *outbuf = xalignalloc (page_size, bufsize);
+
+          ok &= cat (inbuf, insize, outbuf, outsize, show_nonprinting,
+                     show_tabs, number, number_nonblank, show_ends,
+                     squeeze_blank);
+
+          alignfree (outbuf);
+        }
+
+      alignfree (inbuf);
+```
